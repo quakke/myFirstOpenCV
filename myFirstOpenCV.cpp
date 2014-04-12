@@ -51,24 +51,6 @@ int main()
     // kloniryem
     dst = cvCloneImage(src);
 
-    // matrica transformacii
-    CvMat* rot_mat = cvCreateMat(2, 3, CV_32FC1);    
-    // cloniryem izobrazhenie
-    dst = cvCloneImage(src);
-
-    // povorot izobrazhenia
-    // rass4et matrici vrashenia
-    CvPoint2D32f center = cvPoint2D32f(src->width/2, src->height/2);
-    double angle = -1.5;   
-    double scale = 1;      
-    cv2DRotationMatrix(center,angle,scale,rot_mat);
-
-    // vrashenie
-    cvWarpAffine(src, dst, rot_mat);
-
-    // save rezyl'tat transformacii
-    cvCopy(dst, src);
-
     // preobrazyem v gradacii serogo
     cvCvtColor(src, gray, CV_RGB2GRAY);
 
@@ -105,7 +87,6 @@ int main()
     cvReleaseImage(&gray);
     cvReleaseImage(&bin);
     cvReleaseImage(&dst);
-    cvReleaseMat(&rot_mat);
 
     // ydaliaem okna
     cvDestroyAllWindows();

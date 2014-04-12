@@ -26,59 +26,59 @@ int main()
 
 	src = cvCloneImage(image);
 
-// окно дл€ отображени€ картинки
+// Okno dlia otobrazheniia kartinki
 //    cvNamedWindow("original",CV_WINDOW_AUTOSIZE);
 //	  cvNamedWindow("binary",CV_WINDOW_AUTOSIZE);
 //    cvNamedWindow("contours",CV_WINDOW_AUTOSIZE);
 
 
-// показываем картинку
+// show kartinky
 //    cvShowImage("original",image);
 
-	// ƒелаем преобразовани€ изображени€:
-    // создаЄм €дро
+	// Delaem preobrazovania kartinki:
+    // sozdaem iadro
     IplConvKernel* Kern = cvCreateStructuringElementEx(radius*2+1, radius*2+1, radius, radius, CV_SHAPE_ELLIPSE);
-    // картинка дл€ промежуточного хранени€ результатов cvCreateImage
+    // kartinka dlia promezhyto4nogo xranenia rezyl'tatov cvCreateImage
     IplImage* Temp = 0;
     Temp = cvCreateImage(cvSize(image->width, image->height) , IPL_DEPTH_8U, 1);
         
 	cvMorphologyEx(image, src, Temp, Kern, CV_MOP_OPEN, iterations);
 	cvMorphologyEx(image, src, Temp, Kern, CV_MOP_GRADIENT, iterations);
 	
-	// создаЄм одноканальные картинки
+	// sozdaem odnokanal'nie kartinki
     gray = cvCreateImage( cvGetSize(src), IPL_DEPTH_8U, 1 );
     bin = cvCreateImage( cvGetSize(src), IPL_DEPTH_8U, 1 );
-    // клонируем
+    // kloniryem
     dst = cvCloneImage(src);
 
-    // матрицы трансформации
+    // matrica transformacii
     CvMat* rot_mat = cvCreateMat(2, 3, CV_32FC1);    
-    // клонируем изображение
+    // cloniryem izobrazhenie
     dst = cvCloneImage(src);
 
-	// поворот изображени€
-    // рассчЄт матрицы вращени€
+	// povorot izobrazhenia
+    // rass4et matrici vrashenia
     CvPoint2D32f center = cvPoint2D32f(src->width/2, src->height/2);
-    double angle = -1.5;   // на 1,5 градусa по часовой стрелке
-    double scale = 1;      // масштаб
+    double angle = -1.5;   
+    double scale = 1;      
     cv2DRotationMatrix(center,angle,scale,rot_mat);
 
-    // выполн€ем вращение
+    // vrashenie
     cvWarpAffine(src, dst, rot_mat);
 
-	// сохраним результат трансформации
+	// save rezyl'tat transformacii
     cvCopy(dst, src);
 
-	// преобразуем в градации серого
+	// preobrazyem v gradacii serogo
 	cvCvtColor(src, gray, CV_RGB2GRAY);
 
-	// преобразуем в двоичное
-    cvInRangeS(gray, cvScalar(40), cvScalar(150), bin); // atoi(argv[2])
+	// preobrazyem v dvoi4noe
+    cvInRangeS(gray, cvScalar(40), cvScalar(150), bin);
 
-	// находим контуры
+	// naxodim kontyri
     int contoursCont = cvFindContours( bin, storage, &contours, sizeof(CvContour), CV_RETR_LIST, CV_CHAIN_APPROX_NONE ,cvPoint(0,0));
 		
-	// нарисуем контуры
+	// risyem kontyri i opredelzem ti4ki
     for(CvSeq* seq0 = contours; seq0 != 0; seq0 = seq0->h_next)
 	{
 		cvDrawContours(dst, seq0, CV_RGB(255,216,0), CV_RGB(0,0,250), 0, 1, 8); // рисуем контур
@@ -97,7 +97,7 @@ int main()
 	
 	system("pause");
 
-    // освобождаем ресурсы
+    // osvoboghdaem resyrsi
     cvReleaseImage(&image);
     cvReleaseImage(&src);
     cvReleaseStructuringElement(&Kern);
@@ -107,7 +107,7 @@ int main()
     cvReleaseImage(&dst);
 	cvReleaseMat(&rot_mat);
 
-    // удал€ем окна
+    // ydaliaem okna
     cvDestroyAllWindows();
     
 	return 0;

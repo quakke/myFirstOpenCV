@@ -62,17 +62,21 @@ int main()
 		
     // risyem kontyri i opredelzem ti4ki
     for(CvSeq* seq0 = contours; seq0 != 0; seq0 = seq0->h_next)
-	{
-//		cvDrawContours(dst, seq0, CV_RGB(255,216,0), CV_RGB(0,0,250), 0, 1, 8);
+    {
+// 	cvDrawContours(dst, seq0, CV_RGB(255,216,0), CV_RGB(0,0,250), 0, 1, 8); // рисуем контур
 		
-		CvPoint* p = (CvPoint*)cvGetSeqElem ( seq0, 0 );
-		cout << "Verxniaa granica ygla : ";
-		cout << "(" <<  p->x << " ; " <<  p->y << ")" << endl;
+	CvPoint* VL = (CvPoint*)cvGetSeqElem ( seq0, 0 );
+	CvPoint* VP = (CvPoint*)cvGetSeqElem ( seq0, 1300 );
+		
+	CvPoint* NL = (CvPoint*)cvGetSeqElem ( seq0, 645 );
+	CvPoint* NP = (CvPoint*)cvGetSeqElem ( seq0, 654 );
 
-		p = (CvPoint*)cvGetSeqElem ( seq0, image->height );
-		cout << "Nizhniaa granica ygla : ";
-		cout << "(" <<  p->x << " ; " <<  p->y << ")" << endl;
-	}	 
+	VL->x += (abs((VL->x - VP->x)/2));
+	NL->x += (abs((NL->x - NP->x)/2));
+
+	cout << "Verxnia koordinata ygla: " << "(" <<  VL->x << " ; " <<  VL->y << ")" << endl;
+	cout << "Verxnia koordinata ygla: " << "(" <<  NL->x << " ; " <<  NL->y << ")" << endl;
+    }	 
 
 //  cvShowImage("binary", bin);
 //  cvShowImage("contours", dst);

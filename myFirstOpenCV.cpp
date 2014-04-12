@@ -63,7 +63,7 @@ int main()
     // risyem kontyri i opredelzem ti4ki
     for(CvSeq* seq0 = contours; seq0 != 0; seq0 = seq0->h_next)
 	{
-		cvDrawContours(dst, seq0, CV_RGB(255,216,0), CV_RGB(0,0,250), 0, 1, 8);
+//		cvDrawContours(dst, seq0, CV_RGB(255,216,0), CV_RGB(0,0,250), 0, 1, 8);
 		
 		CvPoint* p = (CvPoint*)cvGetSeqElem ( seq0, 0 );
 		cout << "Verxniaa granica ygla : ";
